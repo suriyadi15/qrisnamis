@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro'
+---
+<Base title="Legal — qrisnamis" description="Syarat penggunaan, kebijakan privasi, dan disclaimer qrisnamis.">
+  <main class="prose-lite mx-auto max-w-3xl px-4 py-10">
+    <h1 class="text-3xl font-extrabold text-ink">Legal</h1>
+    <p class="text-sm text-slate-500">Syarat Penggunaan, Kebijakan Privasi &amp; Disclaimer · Indonesia / English summary di bawah</p>
+
+    <h2>1. Disclaimer</h2>
+    <ul>
+      <li><strong>Tidak berafiliasi.</strong> qrisnamis adalah proyek open source independen. Tidak berafiliasi, disponsori, atau didukung oleh Bank Indonesia, ASPI, penyedia jasa pembayaran (PJP), maupun acquirer mana pun. "QRIS" adalah merek milik pemiliknya masing-masing.</li>
+      <li><strong>Hanya manipulasi format data.</strong> Alat ini hanya mengubah format data QR (standar EMVCo TLV). Alat ini tidak memproses, menjamin, menahan, atau memverifikasi transaksi maupun dana.</li>
+      <li><strong>Tanpa jaminan.</strong> Perangkat lunak, library, API, dan situs disediakan "APA ADANYA" tanpa jaminan apa pun, termasuk kebenaran hasil, ketersediaan, atau kesesuaian untuk tujuan tertentu.</li>
+      <li><strong>Verifikasi pembayaran.</strong> Jangan menganggap pembayaran sah hanya karena QR dipindai. Verifikasi selalu melalui aplikasi/mutasi merchant resmi Anda.</li>
+      <li><strong>Kepatuhan.</strong> Anda bertanggung jawab memastikan penggunaan sesuai ketentuan PJP/acquirer Anda dan peraturan yang berlaku (termasuk regulasi Bank Indonesia). Sebagian penyedia dapat tidak mendukung atau melarang QR dinamis hasil modifikasi.</li>
+    </ul>
+
+    <h2>2. Syarat Penggunaan</h2>
+    <ul>
+      <li>Gunakan hanya QRIS <strong>milik Anda sendiri</strong> atau yang Anda <strong>berwenang</strong> gunakan.</li>
+      <li>Dilarang memakai alat/API ini untuk penipuan, pemalsuan, pengalihan pembayaran, atau tindakan melanggar hukum lainnya.</li>
+      <li>Seluruh risiko dan tanggung jawab atas penggunaan ada pada Anda. Anda membebaskan pengembang dan kontributor dari klaim, kerugian, atau kewajiban yang timbul dari penggunaan Anda.</li>
+      <li>Layanan API publik dapat dibatasi, diubah, atau dihentikan kapan saja tanpa pemberitahuan. Penyalahgunaan dapat diblokir.</li>
+      <li>Kode sumber berlisensi <a href="https://opensource.org/licenses/MIT">MIT</a>.</li>
+    </ul>
+
+    <h2>3. Batasan tanggung jawab</h2>
+    <p>
+      Sejauh diizinkan hukum, pengembang dan kontributor tidak bertanggung jawab atas kerugian langsung, tidak langsung, insidental,
+      atau konsekuensial (termasuk kehilangan dana, data, atau keuntungan) yang timbul dari penggunaan atau ketidakmampuan menggunakan
+      alat, library, atau API ini.
+    </p>
+
+    <h2>4. Kebijakan Privasi</h2>
+    <ul>
+      <li><strong>Generator di situs</strong> berjalan sepenuhnya di browser Anda; payload dan gambar QRIS tidak dikirim ke server.</li>
+      <li><strong>API</strong> bersifat stateless: payload yang dikirim hanya diproses untuk membuat respons dan <strong>tidak disimpan maupun dicatat</strong> oleh aplikasi ini.</li>
+      <li>Penyedia infrastruktur (Cloudflare) dapat mencatat metadata permintaan standar (mis. alamat IP, waktu, URL) sesuai kebijakannya. <strong>Catatan:</strong> endpoint <code>GET /api/qr</code> menerima payload melalui query string, yang dapat tercatat di log infrastruktur; gunakan <code>POST</code> bila sensitif.</li>
+      <li>Situs menyimpan satu nilai di <code>localStorage</code> peramban Anda hanya untuk mengingat persetujuan Anda. Tidak ada pelacak atau iklan.</li>
+    </ul>
+
+    <h2>English summary</h2>
+    <p>
+      qrisnamis is an independent open-source project, unaffiliated with Bank Indonesia, ASPI or any payment provider. It only transforms
+      QR data format and does not process or guarantee any payment. Provided "AS IS" without warranty under the MIT license. Use only
+      QRIS codes you own or are authorised to use. You are solely responsible for your use and for compliance with your provider's
+      terms and applicable law; the developers and contributors accept no liability for any loss arising from use. The site generator runs
+      in your browser; the API is stateless and does not store payloads.
+    </p>
+    <p class="text-sm text-slate-500">Dokumen ini adalah template untuk proyek open source dan bukan nasihat hukum.</p>
+  </main>
+</Base>

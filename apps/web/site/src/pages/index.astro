@@ -1,0 +1,240 @@
+---
+import Base from '../layouts/Base.astro'
+import CopyButton from '../components/CopyButton.astro'
+const install = 'npm i qrisnamis'
+const libExample = `import { toDynamicQRIS, parseQRIS } from 'qrisnamis'
+
+const dynamic = toDynamicQRIS(staticQris, {
+  amount: 15000,
+  referenceId: 'INV-0001',          // opsional, tag 62.03 (maks 25)
+  fee: { type: 'fixed', value: 500 } // opsional: fixed | percent | prompt
+})
+
+parseQRIS(dynamic).merchant // { name, city, nmid, ... }`
+const imageExample = `import { decodeQRISImage } from 'qrisnamis/image' // butuh: npm i zxing-wasm
+
+const { payload, info } = await decodeQRISImage(file) // Blob | File | Uint8Array | ...`
+const curlExample = `curl -X POST https://<domain-anda>/api/dynamic \\
+  -H 'content-type: application/json' \\
+  -d '{"qris":"000201...","amount":15000}'`
+---
+<Base>
+  <main class="mx-auto max-w-5xl px-4">
+    <section class="py-14 text-center">
+      <h1 class="text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">QRIS statis → <span class="text-brand">dinamis</span></h1>
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+        Tanamkan nominal, biaya layanan, dan nomor referensi ke QRIS statis. Library TypeScript tanpa dependency,
+        API gratis, dan generator yang berjalan sepenuhnya di browser Anda.
+      </p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a href="#generator" class="btn btn-primary">Coba generator</a>
+        <a href="/api/docs" class="btn btn-ghost">API Playground</a>
+        <div class="flex items-center gap-1 rounded-lg bg-slate-100 py-1 pl-3 pr-1 text-sm"><code>{install}</code><CopyButton text={install} class="text-slate-500 hover:bg-slate-200" /></div>
+      </div>
+    </section>
+
+    <section id="generator" class="scroll-mt-6">
+      <h2 class="mb-1 text-2xl font-bold text-ink">Generator</h2>
+      <p class="mb-4 text-sm text-slate-600">Semua diproses di browser — QRIS Anda tidak dikirim ke server mana pun.</p>
+
+      <div id="consent" class="mb-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+        <label class="flex cursor-pointer items-start gap-3">
+          <input id="consent-check" type="checkbox" class="mt-1 h-4 w-4" />
+          <span>
+            Saya menyatakan QRIS yang saya gunakan adalah <strong>milik saya sendiri</strong> atau saya berwenang menggunakannya,
+            tidak akan dipakai untuk penipuan/pengalihan pembayaran, dan saya menyetujui{' '}
+            <a class="underline" href="/legal" target="_blank">Syarat Penggunaan &amp; Disclaimer</a>.
+            Pengembang tidak bertanggung jawab atas penggunaan alat ini.
+          </span>
+        </label>
+      </div>
+
+      <div id="gen" class="grid gap-6 opacity-50 md:grid-cols-2" aria-disabled="true">
+        <div class="space-y-4">
+          <div>
+            <span class="label">1. QRIS statis</span>
+            <label id="drop" class="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-300 p-6 text-center text-sm text-slate-500 hover:bg-slate-50">
+              <span>Seret gambar QRIS ke sini, atau klik untuk memilih</span>
+              <input id="file" type="file" accept="image/*" class="hidden" />
+            </label>
+            <textarea id="static" rows="3" class="input mt-2 font-mono text-xs" placeholder="…atau tempel teks payload QRIS statis (000201…)"></textarea>
+            <p id="status" class="mt-1 min-h-5 text-xs text-slate-500"></p>
+          </div>
+          <div id="merchant" class="hidden rounded-lg bg-slate-50 p-3 text-sm"></div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="label" for="amount">2. Nominal (Rp)</label><input id="amount" class="input" inputmode="decimal" placeholder="15000" /></div>
+            <div><label class="label" for="ref">Referensi (ops.)</label><input id="ref" maxlength="25" class="input" placeholder="INV-0001" /></div>
+            <div>
+              <label class="label" for="feeType">Biaya layanan</label>
+              <select id="feeType" class="input">
+                <option value="">Tidak ada</option>
+                <option value="fixed">Tetap (Rp)</option>
+                <option value="percent">Persen (%)</option>
+                <option value="prompt">Minta pembayar isi</option>
+              </select>
+            </div>
+            <div><label class="label" for="feeValue">Nilai biaya</label><input id="feeValue" class="input" inputmode="decimal" disabled /></div>
+          </div>
+          <p id="error" class="min-h-5 text-sm text-red-600"></p>
+        </div>
+
+        <div class="flex flex-col items-center gap-3 rounded-xl border border-slate-200 p-4">
+          <div id="qr" class="flex aspect-square w-full max-w-xs items-center justify-center rounded-lg bg-white text-sm text-slate-400">Hasil QR muncul di sini</div>
+          <div class="flex flex-wrap justify-center gap-2">
+            <button id="dl" class="btn btn-primary" disabled>Download PNG</button>
+            <button id="copy" class="btn btn-ghost" disabled>Salin payload</button>
+          </div>
+          <textarea id="out" readonly rows="3" class="input font-mono text-xs" placeholder="Payload dinamis"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section id="library" class="prose-lite mt-16 scroll-mt-6">
+      <h2>Library</h2>
+      <p>Zero dependency, jalan di Node, Bun, browser, dan Cloudflare Workers. ESM + CJS + tipe TypeScript.</p>
+      <div class="relative"><pre class="overflow-x-auto rounded-xl bg-ink p-4 pr-12 text-sm text-slate-100"><code>{install}</code></pre><CopyButton text={install} class="absolute right-2 top-2 text-slate-300 hover:bg-slate-700" /></div>
+      <pre class="mt-3 overflow-x-auto rounded-xl bg-ink p-4 text-sm text-slate-100"><code>{libExample}</code></pre>
+      <pre class="mt-3 overflow-x-auto rounded-xl bg-ink p-4 text-sm text-slate-100"><code>{imageExample}</code></pre>
+      <p class="mt-3"><a href="/docs#tutorial-1-alur-lengkap-di-node"><strong>Tutorial alur lengkap →</strong></a> gambar QRIS → string → dinamis → gambar, lengkap dengan contoh Node, browser, Express, Next.js, Workers, dan curl. <a href="/docs">Referensi API</a>.</p>
+      <ul>
+        <li><code>toDynamicQRIS</code> — ubah statis ke dinamis (nominal, fee 55/56/57, referensi 62.03) dengan validasi CRC.</li>
+        <li><code>parseQRIS</code> / <code>validateQRIS</code> — baca info merchant, NMID, dan cek CRC.</li>
+        <li><code>decodeQRISImage</code> (<code>qrisnamis/image</code>) — baca QRIS dari gambar.</li>
+        <li><code>QRISError</code> — kode error jelas: <code>INVALID_CRC</code>, <code>INVALID_AMOUNT</code>, dst.</li>
+      </ul>
+    </section>
+
+    <section id="api" class="prose-lite mt-12 scroll-mt-6">
+      <h2>API</h2>
+      <p>Gratis dan stateless. Coba langsung di <a href="/api/docs">API Playground</a>.</p>
+      <ul>
+        <li><code>POST /api/dynamic</code> — payload dinamis</li>
+        <li><code>POST /api/parse</code> — parse &amp; validasi</li>
+        <li><code>GET /api/qr</code> — gambar QR (<code>format=svg|png</code>), bisa dipakai di <code>&lt;img&gt;</code></li>
+        <li><code>POST /api/decode</code> — baca payload QRIS dari gambar (maks 1 MB); untuk membuat dinamis, lanjutkan ke <code>/api/dynamic</code></li>
+      </ul>
+      <pre class="overflow-x-auto rounded-xl bg-ink p-4 text-sm text-slate-100"><code>{curlExample}</code></pre>
+      <p class="text-sm">Dengan memakai API ini Anda menyetujui <a href="/legal">Syarat Penggunaan</a>. Tidak ada jaminan ketersediaan.</p>
+    </section>
+  </main>
+
+  <script>
+    import { toDynamicQRIS, parseQRIS, QRISError } from 'qrisnamis'
+    import { configureDecoder, decodeQRISImage } from 'qrisnamis/image'
+    import { encode, renderSVG } from 'uqr'
+    import wasmUrl from 'zxing-wasm/reader/zxing_reader.wasm?url'
+
+    configureDecoder({ wasmUrl })
+
+    document.addEventListener('click', async (e) => {
+      const btn = (e.target as Element).closest<HTMLButtonElement>('[data-copy]')
+      if (!btn) return
+      try { await navigator.clipboard.writeText(btn.dataset.copy ?? '') } catch { return }
+      btn.querySelector('.copy-icon')?.classList.add('hidden')
+      btn.querySelector('.check-icon')?.classList.remove('hidden')
+      setTimeout(() => {
+        btn.querySelector('.copy-icon')?.classList.remove('hidden')
+        btn.querySelector('.check-icon')?.classList.add('hidden')
+      }, 1500)
+    })
+
+    const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T
+    const gen = $('gen'), consent = $<HTMLInputElement>('consent-check')
+    const fileEl = $<HTMLInputElement>('file'), staticEl = $<HTMLTextAreaElement>('static')
+    const amountEl = $<HTMLInputElement>('amount'), refEl = $<HTMLInputElement>('ref')
+    const feeType = $<HTMLSelectElement>('feeType'), feeValue = $<HTMLInputElement>('feeValue')
+    const statusEl = $('status'), errorEl = $('error'), merchantEl = $('merchant')
+    const qrEl = $('qr'), outEl = $<HTMLTextAreaElement>('out')
+    const dl = $<HTMLButtonElement>('dl'), copy = $<HTMLButtonElement>('copy')
+    let matrix: boolean[][] | null = null
+
+    const KEY = 'qrisnamis-consent'
+    const read = () => { try { return localStorage.getItem(KEY) === '1' } catch { return false } }
+    const write = (v: boolean) => { try { localStorage.setItem(KEY, v ? '1' : '0') } catch {} }
+    function applyConsent(on: boolean) {
+      consent.checked = on
+      gen.classList.toggle('opacity-50', !on)
+      gen.classList.toggle('pointer-events-none', !on)
+      gen.setAttribute('aria-disabled', String(!on))
+    }
+    applyConsent(read())
+    consent.addEventListener('change', () => { write(consent.checked); applyConsent(consent.checked) })
+
+    function render() {
+      errorEl.textContent = ''
+      matrix = null
+      dl.disabled = copy.disabled = true
+      outEl.value = ''
+      qrEl.innerHTML = '<span>Hasil QR muncul di sini</span>'
+      merchantEl.classList.add('hidden')
+
+      const src = staticEl.value.trim()
+      if (!src) return
+      try {
+        const info = parseQRIS(src)
+        merchantEl.classList.remove('hidden')
+        merchantEl.textContent = ''
+        const b = document.createElement('div')
+        b.innerHTML = '<strong></strong><div class="text-slate-500"></div>'
+        b.querySelector('strong')!.textContent = info.merchant.name ?? '(tanpa nama)'
+        b.querySelector('div')!.textContent = [info.merchant.city, info.merchant.nmid && `NMID ${info.merchant.nmid}`, info.crc.valid ? 'CRC valid' : 'CRC TIDAK valid'].filter(Boolean).join(' · ')
+        merchantEl.append(b)
+        if (!amountEl.value.trim()) return
+        const t = feeType.value
+        const payload = toDynamicQRIS(src, {
+          amount: amountEl.value.trim(),
+          referenceId: refEl.value.trim() || undefined,
+          fee: t === 'prompt' ? { type: 'prompt' } : t ? { type: t as 'fixed' | 'percent', value: feeValue.value.trim() } : undefined,
+        })
+        outEl.value = payload
+        matrix = encode(payload, { ecc: 'M', border: 0 }).data
+        qrEl.innerHTML = renderSVG(payload, { ecc: 'M', border: 4 })
+        qrEl.querySelector('svg')?.setAttribute('class', 'w-full h-full')
+        dl.disabled = copy.disabled = false
+      } catch (e) {
+        errorEl.textContent = e instanceof QRISError || e instanceof Error ? e.message : 'Terjadi kesalahan'
+      }
+    }
+
+    async function decodeFile(f: File) {
+      statusEl.textContent = 'Membaca QR…'
+      try {
+        const { payload } = await decodeQRISImage(f)
+        staticEl.value = payload
+        statusEl.textContent = 'QR berhasil dibaca.'
+        render()
+      } catch (e) {
+        const code = e instanceof QRISError ? e.code : ''
+        statusEl.textContent =
+          code === 'NOT_QRIS' ? 'QR terbaca, tetapi bukan QRIS.'
+          : code === 'QR_NOT_FOUND' ? 'QR tidak terbaca. Coba gambar yang lebih jelas atau tempel teksnya.'
+          : 'Gagal membaca gambar.'
+      }
+    }
+
+    fileEl.addEventListener('change', () => fileEl.files?.[0] && decodeFile(fileEl.files[0]))
+    const drop = $('drop')
+    drop.addEventListener('dragover', (e) => e.preventDefault())
+    drop.addEventListener('drop', (e) => { e.preventDefault(); const f = (e as DragEvent).dataTransfer?.files?.[0]; if (f) decodeFile(f) })
+    feeType.addEventListener('change', () => { feeValue.disabled = !feeType.value || feeType.value === 'prompt'; render() })
+    for (const el of [staticEl, amountEl, refEl, feeValue]) el.addEventListener('input', render)
+
+    copy.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(outEl.value)
+      copy.textContent = 'Tersalin ✓'; setTimeout(() => (copy.textContent = 'Salin payload'), 1500)
+    })
+    dl.addEventListener('click', () => {
+      if (!matrix) return
+      const scale = 10, margin = 4, n = matrix.length, size = (n + margin * 2) * scale
+      const c = document.createElement('canvas'); c.width = c.height = size
+      const g = c.getContext('2d')!
+      g.fillStyle = '#fff'; g.fillRect(0, 0, size, size); g.fillStyle = '#000'
+      matrix.forEach((row, y) => row.forEach((on, x) => on && g.fillRect((x + margin) * scale, (y + margin) * scale, scale, scale)))
+      c.toBlob((b) => {
+        if (!b) return
+        const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'qris-dinamis.png'; a.click()
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000)
+      })
+    })
+  </script>
+</Base>

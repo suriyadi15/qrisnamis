@@ -1,0 +1,29 @@
+{
+  "name": "qrisnamis-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run build:site && wrangler dev",
+    "dev:site": "cd site && astro dev",
+    "build:site": "cd site && astro build",
+    "deploy": "bun run build:site && wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@hono/zod-openapi": "latest",
+    "@scalar/hono-api-reference": "latest",
+    "hono": "latest",
+    "qrisnamis": "workspace:*",
+    "uqr": "latest",
+    "zxing-wasm": "latest",
+    "astro": "latest",
+    "tailwindcss": "latest",
+    "@tailwindcss/vite": "latest"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "latest",
+    "typescript": "~5.9.0",
+    "wrangler": "latest"
+  }
+}

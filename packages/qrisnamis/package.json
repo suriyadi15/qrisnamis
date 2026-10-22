@@ -1,0 +1,79 @@
+{
+  "name": "qrisnamis",
+  "version": "0.1.0",
+  "description": "Ubah QRIS statis menjadi dinamis (nominal, biaya, referensi), parse, dan decode dari gambar — zero dependency, TypeScript.",
+  "keywords": [
+    "qris",
+    "qr",
+    "emvco",
+    "indonesia",
+    "payment",
+    "dynamic-qris",
+    "qris-dinamis"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suriyadi15/qrisnamis.git",
+    "directory": "packages/qrisnamis"
+  },
+  "homepage": "https://github.com/suriyadi15/qrisnamis#readme",
+  "bugs": "https://github.com/suriyadi15/qrisnamis/issues",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./image": {
+      "import": {
+        "types": "./dist/image.d.mts",
+        "default": "./dist/image.mjs"
+      },
+      "require": {
+        "types": "./dist/image.d.cts",
+        "default": "./dist/image.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "DISCLAIMER.md"
+  ],
+  "scripts": {
+    "build": "tsdown src/index.ts src/image.ts --format esm,cjs --dts --clean",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run test && bun run build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "tsdown": "latest",
+    "typescript": "~5.9.0",
+    "@types/bun": "latest",
+    "zxing-wasm": "latest"
+  },
+  "peerDependencies": {
+    "zxing-wasm": ">=3"
+  },
+  "peerDependenciesMeta": {
+    "zxing-wasm": {
+      "optional": true
+    }
+  }
+}

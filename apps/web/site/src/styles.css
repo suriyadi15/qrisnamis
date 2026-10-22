@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'JetBrains Mono', SFMono-Regular, Menlo, monospace;
+  --color-ink: #0f172a;
+  --color-brand: #e11d48;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-white text-slate-800 antialiased; }
+code, pre { @apply font-mono; }
+.btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50; }
+.btn-primary { @apply bg-ink text-white hover:bg-slate-700; }
+.btn-ghost { @apply border border-slate-300 bg-white text-slate-700 hover:bg-slate-50; }
+.input { @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-200; }
+.label { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500; }
+.prose-lite h2 { @apply mt-8 mb-2 text-xl font-bold text-ink; }
+.prose-lite p, .prose-lite li { @apply leading-relaxed text-slate-700; }
+.prose-lite ul { @apply my-2 list-disc pl-6; }
+.prose-lite a { @apply text-brand underline; }
+.copy-btn { @apply inline-flex h-8 w-8 items-center justify-center rounded-md transition; }
+
+.docs h1 { @apply mb-3 text-3xl font-extrabold text-ink; }
+.docs h2 { @apply mt-10 mb-3 border-b border-slate-200 pb-1 text-2xl font-bold text-ink; }
+.docs h3 { @apply mt-6 mb-2 text-lg font-bold text-ink; }
+.docs p, .docs li { @apply my-2 leading-relaxed text-slate-700; }
+.docs ul { @apply my-2 list-disc pl-6; }
+.docs ol { @apply my-2 list-decimal pl-6; }
+.docs a { @apply text-brand underline; }
+.docs blockquote { @apply my-4 rounded-lg border-l-4 border-amber-400 bg-amber-50 px-4 py-2; }
+.docs :not(pre) > code { @apply rounded bg-slate-100 px-1.5 py-0.5 text-[0.85em] text-slate-800; }
+.docs pre { @apply my-3 overflow-x-auto rounded-xl p-4 text-sm leading-relaxed; }
+.docs table { @apply my-4 block w-full overflow-x-auto text-sm; }
+.docs th { @apply border-b-2 border-slate-300 px-3 py-2 text-left font-semibold; }
+.docs td { @apply border-b border-slate-200 px-3 py-2 align-top; }

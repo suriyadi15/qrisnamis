@@ -1,0 +1,16 @@
+{
+  "name": "qrisnamis-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "bun test --cwd packages/qrisnamis",
+    "build:lib": "bun run --cwd packages/qrisnamis build",
+    "build:site": "bun run build:lib && bun run --cwd apps/web build:site",
+    "dev": "bun run build:lib && bun run --cwd apps/web dev",
+    "deploy": "bun run build:lib && bun run --cwd apps/web deploy",
+    "typecheck": "bun run build:lib && bun run --cwd packages/qrisnamis typecheck && bun run --cwd apps/web typecheck"
+  }
+}
