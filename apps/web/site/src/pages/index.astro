@@ -17,8 +17,23 @@ const { payload, info } = await decodeQRISImage(file) // Blob | File | Uint8Arra
 const curlExample = `curl -X POST https://<domain-anda>/api/dynamic \\
   -H 'content-type: application/json' \\
   -d '{"qris":"000201...","amount":15000}'`
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'qrisnamis',
+  description: 'Library TypeScript, API, dan generator gratis untuk mengubah QRIS statis menjadi QRIS dinamis dengan nominal tertanam.',
+  url: 'https://qrisnamis.pages.dev/',
+  image: 'https://qrisnamis.pages.dev/og.png',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Any',
+  inLanguage: 'id',
+  license: 'https://opensource.org/licenses/MIT',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'IDR' },
+  author: { '@type': 'Person', name: 'Suriyadi', url: 'https://github.com/suriyadi15' },
+  sameAs: ['https://github.com/suriyadi15/qrisnamis', 'https://www.npmjs.com/package/qrisnamis'],
+}
 ---
-<Base>
+<Base jsonLd={jsonLd}>
   <main class="mx-auto max-w-5xl px-4">
     <section class="py-14 text-center">
       <h1 class="text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">QRIS statis → <span class="text-brand">dinamis</span></h1>

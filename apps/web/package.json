@@ -6,6 +6,7 @@
     "dev": "bun run build:site && wrangler pages dev",
     "dev:site": "cd site && astro dev",
     "build:site": "cd site && astro build",
+    "og": "cd site && rsvg-convert -w 1200 -h 630 og/og.svg -o public/og.png && rsvg-convert -w 180 -h 180 og/apple-touch-icon.svg -o public/apple-touch-icon.png",
     "deploy": "bun run build:site && wrangler pages deploy --branch main",
     "typecheck": "tsc --noEmit",
     "cf-typegen": "wrangler types"

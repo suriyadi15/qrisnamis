@@ -1,7 +1,17 @@
 ---
 import '../styles.css'
-interface Props { title?: string; description?: string }
-const { title = 'qrisnamis — QRIS statis jadi dinamis', description = 'Library TypeScript, API, dan generator gratis untuk mengubah QRIS statis menjadi QRIS dinamis dengan nominal tertanam.' } = Astro.props
+interface Props { title?: string; description?: string; image?: string; noindex?: boolean; jsonLd?: Record<string, unknown> }
+const {
+  title = 'qrisnamis — QRIS statis jadi dinamis',
+  description = 'Library TypeScript, API, dan generator gratis untuk mengubah QRIS statis menjadi QRIS dinamis dengan nominal tertanam.',
+  image = '/og.png',
+  noindex = false,
+  jsonLd,
+} = Astro.props
+// Cloudflare Pages serves /docs (no trailing slash); keep canonical in sync with sitemap.xml
+const canonical = new URL(Astro.url.pathname.replace(/(.)\/$/, '$1'), Astro.site)
+const imageUrl = new URL(image, Astro.site)
+const imageAlt = 'qrisnamis — ubah QRIS statis menjadi dinamis dengan nominal tertanam'
 ---
 <!doctype html>
 <html lang="id">
@@ -10,7 +20,34 @@ const { title = 'qrisnamis — QRIS statis jadi dinamis', description = 'Library
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>▦</text></svg>" />
+    <meta name="keywords" content="qris, qris dinamis, qris statis, qris nominal, generator qris, api qris, typescript, emvco" />
+    <meta name="author" content="Suriyadi" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="qrisnamis" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
     <header class="border-b border-slate-200">
