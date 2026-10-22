@@ -441,6 +441,10 @@ Tag lain (merchant, kategori, nama, kota, dll.) dibiarkan apa adanya.
 
 **Mengapa library tidak menggambar QR sendiri?** Supaya tetap kecil dan tanpa dependency. Gambar QR adalah urusan library khusus (`qrcode`, `uqr`, dll.), dan hasilnya string payload yang sama.
 
+## Traktir
+
+qrisnamis gratis dan open source. Kalau bermanfaat, traktir kopi lewat [Trakteer](https://trakteer.id/suriyadi15/tip) atau [GitHub Sponsors](https://github.com/sponsors/suriyadi15).
+
 ## Lisensi
 
 MIT. Baca juga `DISCLAIMER.md`.

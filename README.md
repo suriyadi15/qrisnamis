@@ -9,6 +9,8 @@
 [![license](https://img.shields.io/github/license/suriyadi15/qrisnamis)](./LICENSE)
 [![stars](https://img.shields.io/github/stars/suriyadi15/qrisnamis?style=flat&logo=github)](https://github.com/suriyadi15/qrisnamis)
 [![demo](https://img.shields.io/badge/demo-qrisnamis.pages.dev-f38020?logo=cloudflare&logoColor=white)](https://qrisnamis.pages.dev)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/suriyadi15?label=Sponsor&logo=githubsponsors&color=EA4AAA)](https://github.com/sponsors/suriyadi15)
+[![Trakteer](https://img.shields.io/badge/Trakteer-Traktir-BE1E2D)](https://trakteer.id/suriyadi15/tip)
 
 Library TypeScript, API gratis (Cloudflare Pages), dan generator web untuk mengubah **QRIS statis → dinamis**.
 
@@ -56,6 +58,10 @@ Catatan: batas CPU Workers gratis ±10 ms; `/api/decode` pada gambar besar bisa 
 
 - **npm:** push tag `v*` → workflow `release.yml` (butuh secret `NPM_TOKEN`).
 - **Situs + API (Pages, https://qrisnamis.pages.dev):** push ke `main` → `deploy.yml` (butuh secret `CLOUDFLARE_API_TOKEN` dengan izin Cloudflare Pages: Edit, dan `CLOUDFLARE_ACCOUNT_ID`).
+
+## Traktir
+
+qrisnamis gratis dan open source. Kalau bermanfaat, traktir kopi lewat [Trakteer](https://trakteer.id/suriyadi15/tip) atau [GitHub Sponsors](https://github.com/sponsors/suriyadi15).
 
 ## Lisensi
 
