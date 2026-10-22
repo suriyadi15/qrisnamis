@@ -59,6 +59,10 @@ Catatan: batas CPU Workers gratis ±10 ms; `/api/decode` pada gambar besar bisa 
 - **npm:** push tag `v*` → workflow `release.yml` (butuh secret `NPM_TOKEN`).
 - **Situs + API (Pages, https://qrisnamis.pages.dev):** push ke `main` → `deploy.yml` (butuh secret `CLOUDFLARE_API_TOKEN` dengan izin Cloudflare Pages: Edit, dan `CLOUDFLARE_ACCOUNT_ID`).
 
+## Proyek terkait
+
+**QRIS Hook** — aplikasi Android yang memantau notifikasi pembayaran QRIS dan mengirim event pembayaran ke webhook Anda. Cocok dipasangkan dengan qrisnamis untuk konfirmasi pembayaran otomatis. [Website](https://qrishook.pages.dev/) · [GitHub](https://github.com/suriyadi15/qrishook)
+
 ## Traktir
 
 qrisnamis gratis dan open source. Kalau bermanfaat, traktir kopi lewat [Trakteer](https://trakteer.id/suriyadi15/tip) atau [GitHub Sponsors](https://github.com/sponsors/suriyadi15).
