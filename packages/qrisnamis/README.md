@@ -1,5 +1,13 @@
 # qrisnamis
 
+[![npm version](https://img.shields.io/npm/v/qrisnamis?logo=npm&color=cb3837)](https://www.npmjs.com/package/qrisnamis)
+[![npm downloads](https://img.shields.io/npm/dm/qrisnamis?logo=npm&color=cb3837)](https://www.npmjs.com/package/qrisnamis)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/qrisnamis?label=minzipped)](https://bundlephobia.com/package/qrisnamis)
+[![types](https://img.shields.io/npm/types/qrisnamis?logo=typescript&logoColor=white)](https://www.npmjs.com/package/qrisnamis)
+[![CI](https://img.shields.io/github/actions/workflow/status/suriyadi15/qrisnamis/ci.yml?branch=main&label=CI&logo=github)](https://github.com/suriyadi15/qrisnamis/actions/workflows/ci.yml)
+[![license](https://img.shields.io/npm/l/qrisnamis)](https://github.com/suriyadi15/qrisnamis/blob/main/LICENSE)
+[![demo](https://img.shields.io/badge/demo-qrisnamis.pages.dev-f38020?logo=cloudflare&logoColor=white)](https://qrisnamis.pages.dev)
+
 Ubah **QRIS statis** menjadi **QRIS dinamis** (nominal, biaya layanan, nomor referensi), baca isi QRIS, dan baca QRIS dari gambar. TypeScript, inti library tanpa dependency, jalan di Node, Bun, browser, dan Cloudflare Workers.
 
 > ⚠️ **Disclaimer:** proyek independen, tidak berafiliasi dengan Bank Indonesia, ASPI, atau penyedia pembayaran mana pun. Gunakan hanya QRIS milik Anda atau yang Anda berwenang gunakan. Disediakan apa adanya tanpa jaminan; pengembang tidak bertanggung jawab atas penggunaan. Lihat file `DISCLAIMER.md` di paket ini.
