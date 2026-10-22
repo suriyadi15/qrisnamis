@@ -17,7 +17,7 @@
     "url": "git+https://github.com/suriyadi15/qrisnamis.git",
     "directory": "packages/qrisnamis"
   },
-  "homepage": "https://github.com/suriyadi15/qrisnamis#readme",
+  "homepage": "https://qrisnamis.pages.dev",
   "bugs": "https://github.com/suriyadi15/qrisnamis/issues",
   "type": "module",
   "sideEffects": false,

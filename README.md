@@ -1,12 +1,12 @@
 # qrisnamis
 
-Library TypeScript, API gratis (Cloudflare Workers), dan generator web untuk mengubah **QRIS statis → dinamis**.
+Library TypeScript, API gratis (Cloudflare Pages), dan generator web untuk mengubah **QRIS statis → dinamis**.
 
 > ⚠️ **Disclaimer:** proyek independen, tidak berafiliasi dengan Bank Indonesia/ASPI/penyedia pembayaran mana pun. Gunakan hanya QRIS milik Anda atau yang Anda berwenang gunakan. Tanpa jaminan; pengembang tidak bertanggung jawab atas penggunaan. Lihat [DISCLAIMER.md](./DISCLAIMER.md).
 
 ```
 packages/qrisnamis   library npm (zero dependency)
-apps/web             satu Cloudflare Worker: API (Hono + OpenAPI) + landing (Astro)
+apps/web             satu proyek Cloudflare Pages: API (Hono + OpenAPI) + landing (Astro)
 ```
 
 ## Pengembangan
@@ -15,8 +15,8 @@ apps/web             satu Cloudflare Worker: API (Hono + OpenAPI) + landing (Ast
 bun install
 bun run test          # test library
 bun run build:lib     # build library (dist ESM + CJS + d.ts)
-bun run dev           # build landing + wrangler dev di :8787
-bun run deploy        # build landing + wrangler deploy
+bun run dev           # build landing + wrangler pages dev di :8788
+bun run deploy        # build landing + wrangler pages deploy
 ```
 
 ## Library
@@ -45,7 +45,7 @@ Catatan: batas CPU Workers gratis ±10 ms; `/api/decode` pada gambar besar bisa 
 ## Rilis
 
 - **npm:** push tag `v*` → workflow `release.yml` (butuh secret `NPM_TOKEN`).
-- **Worker:** push ke `main` → `deploy.yml` (butuh secret `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`).
+- **Situs + API (Pages, https://qrisnamis.pages.dev):** push ke `main` → `deploy.yml` (butuh secret `CLOUDFLARE_API_TOKEN` dengan izin Cloudflare Pages: Edit, dan `CLOUDFLARE_ACCOUNT_ID`).
 
 ## Lisensi
 
